@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MUKA-MUKA Demo</title>
+  <meta name="description" content="A demo site on demo.mukamuka.my, separate from the main MUKA-MUKA website.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#2A2A2A">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23FDB43C'/%3E%3Ccircle cx='34' cy='48' r='16' fill='%23fff'/%3E%3Ccircle cx='66' cy='48' r='16' fill='%23fff'/%3E%3Ccircle cx='36' cy='52' r='10' fill='%232A2A2A'/%3E%3Ccircle cx='68' cy='52' r='10' fill='%232A2A2A'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #D44532;
+      --cream: #FDEBD5;
+      --cream-2: #F8DEC0;
+      --mustard: #FDB43C;
+      --charcoal: #2A2A2A;
+      --stroke: 3px solid var(--charcoal);
+      --display: 'Bowlby One', 'Arial Black', sans-serif;
+      --body: 'Jost', system-ui, sans-serif;
+      --gutter: clamp(16px, 4vw, 40px);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--body);
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--cream);
+      background: var(--charcoal);
+      overflow-x: hidden;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1100px, 100% - var(--gutter) * 2); margin-inline: auto; }
+
+    /* Top bar */
+    .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; }
+    .tag {
+      font-weight: 700; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--charcoal); background: var(--mustard);
+      border: 3px solid var(--cream); border-radius: 999px; padding: 4px 14px;
+    }
+    .back { font-weight: 600; text-decoration: none; border-bottom: 2px dashed currentColor; }
+    .back:hover { color: var(--mustard); }
+
+    /* Hero */
+    .hero { position: relative; padding: clamp(48px, 10vw, 120px) 0 clamp(64px, 10vw, 120px); }
+    .eyebrow { color: var(--mustard); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 12px; }
+    h1 {
+      font-family: var(--display); font-weight: 400; text-transform: uppercase;
+      font-size: clamp(2.6rem, 8vw, 5.6rem); line-height: .98; margin: 0 0 24px; max-width: 11ch;
+    }
+    h1 span { color: var(--mustard); }
+    .lead { font-size: clamp(1.1rem, 2vw, 1.3rem); max-width: 34em; opacity: .9; margin: 0 0 32px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 14px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: .85em 1.6em; border: var(--stroke); border-radius: 999px;
+      font-family: var(--display); font-size: .95rem; text-transform: uppercase; text-decoration: none;
+      background: var(--mustard); color: var(--charcoal); box-shadow: 4px 4px 0 var(--red);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--red); }
+    .btn-outline { background: transparent; color: var(--cream); border-color: var(--cream); }
+
+    .chars { position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: grid; gap: 10px; justify-items: end; pointer-events: none; }
+    .char { display: block; width: clamp(120px, 18vw, 220px); aspect-ratio: 1; }
+    .char + .char { width: clamp(90px, 13vw, 160px); margin-right: clamp(40px, 8vw, 120px); }
+    .char svg { width: 100%; height: 100%; overflow: visible; }
+
+    /* Cards */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding-bottom: clamp(64px, 10vw, 110px); }
+    .card {
+      background: var(--cream); color: var(--charcoal);
+      border: var(--stroke); border-radius: 22px; padding: 28px;
+      box-shadow: 6px 6px 0 var(--red);
+    }
+    .card .num { font-family: var(--display); color: var(--red); font-size: 2rem; line-height: 1; }
+    .card h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 1.3rem; line-height: 1.15; margin: 14px 0 8px; }
+    .card p { margin: 0; color: #5a4a40; }
+
+    /* Footer */
+    footer { border-top: 3px solid var(--cream); padding: 26px 0 34px; font-size: .95rem; }
+    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; opacity: .85; }
+
+    @media (max-width: 860px) {
+      .chars { position: static; transform: none; grid-auto-flow: column; justify-content: start; align-items: end; margin-top: 44px; }
+      .char + .char { margin-right: 0; }
+      .cards { grid-template-columns: 1fr; max-width: 560px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <span class="tag">Demo</span>
+      <a class="back" href="https://mukamuka.my">← Back to mukamuka.my</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">demo.mukamuka.my</p>
+        <h1>Something new is <span>cooking.</span></h1>
+        <p class="lead">This is a demo site living on its own subdomain, separate from the main MUKA-MUKA website. It's a space to try new ideas before they go live.</p>
+        <div class="actions">
+          <a class="btn" href="https://mukamuka.my">Visit MUKA-MUKA</a>
+          <a class="btn btn-outline" href="https://mukamuka.my/#contact">Say hi</a>
+        </div>
+        <div class="chars" aria-hidden="true">
+          <span class="char" data-shape="sun" data-color="#FDB43C"></span>
+          <span class="char" data-shape="blob" data-color="#D44532"></span>
+        </div>
+      </section>
+
+      <section class="cards" aria-label="About this demo">
+        <article class="card">
+          <span class="num">01</span>
+          <h2>Its own website</h2>
+          <p>Separate code and a separate deployment, so changes here never touch mukamuka.my.</p>
+        </article>
+        <article class="card">
+          <span class="num">02</span>
+          <h2>Its own address</h2>
+          <p>Served on demo.mukamuka.my, a subdomain of the main domain, with HTTPS.</p>
+        </article>
+        <article class="card">
+          <span class="num">03</span>
+          <h2>Updates by itself</h2>
+          <p>Every change pushed to its GitHub repository goes live here automatically.</p>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>© <span id="year">2026</span> MUKA-MUKA · Demo site</span>
+      <a class="back" href="https://mukamuka.my">mukamuka.my</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+      // Googly-eyed characters whose eyes follow the pointer
+      var sun = (function () {
+        var p = [];
+        for (var i = 0; i < 240; i++) {
+          var t = i / 240 * Math.PI * 2, r = 80 + 13 * Math.cos(10 * t + Math.PI);
+          p.push((i ? 'L' : 'M') + (100 + r * Math.sin(t)).toFixed(1) + ' ' + (100 - r * Math.cos(t)).toFixed(1));
+        }
+        return p.join('') + 'Z';
+      })();
+      var SHAPES = {
+        sun: { body: function (c) { return '<path d="' + sun + '" fill="' + c + '"/>'; }, eyes: [[74, 96, 27], [126, 96, 27]] },
+        blob: {
+          body: function (c) {
+            return '<g fill="' + c + '"><ellipse cx="96" cy="108" rx="92" ry="50" transform="rotate(-35 96 108)"/>' +
+                   '<ellipse cx="128" cy="134" rx="62" ry="38" transform="rotate(-18 128 134)"/></g>';
+          },
+          eyes: [[80, 104, 26], [130, 100, 26]]
+        }
+      };
+      var eyes = [];
+      document.querySelectorAll('.char').forEach(function (el, n) {
+        var s = SHAPES[el.dataset.shape];
+        var svg = s.body(el.dataset.color);
+        s.eyes.forEach(function (e, k) {
+          var id = 'clip' + n + k;
+          svg += '<clipPath id="' + id + '"><circle cx="' + e[0] + '" cy="' + e[1] + '" r="' + e[2] + '"/></clipPath>' +
+                 '<circle cx="' + e[0] + '" cy="' + e[1] + '" r="' + e[2] + '" fill="#fff"/>' +
+                 '<circle class="pupil" clip-path="url(#' + id + ')" cx="' + e[0] + '" cy="' + (e[1] + e[2] * .35) + '" r="' + (e[2] * .68) + '" fill="#2A2A2A"/>';
+        });
+        el.innerHTML = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">' + svg + '</svg>';
+        el.querySelectorAll('.pupil').forEach(function (p, k) { eyes.push({ p: p, e: s.eyes[k], el: el }); });
+      });
+
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        window.addEventListener('pointermove', function (ev) {
+          eyes.forEach(function (o) {
+            var r = o.el.getBoundingClientRect(), k = r.width / 200;
+            var dx = ev.clientX - (r.left + o.e[0] * k), dy = ev.clientY - (r.top + o.e[1] * k);
+            var d = Math.hypot(dx, dy) || 1, m = o.e[2] * .42 * Math.min(1, d / 160);
+            o.p.setAttribute('cx', (o.e[0] + dx / d * m).toFixed(1));
+            o.p.setAttribute('cy', (o.e[1] + dy / d * m).toFixed(1));
+          });
+        }, { passive: true });
+      }
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
